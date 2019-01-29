@@ -8,7 +8,7 @@ const Header = (props) => {
                 <div className="menu-toggle grid-item-fixed lg-show" onClick={() => props.onMenuToggle()}>
                     <span className="middle-bar"></span>
                 </div>
-                <div className="logo"><a href="/"></a></div>
+                <div className="logo"><a href="/"></a></div>               
             </div>
             {props.children}
         </div>

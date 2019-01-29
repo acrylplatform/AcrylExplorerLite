@@ -7,7 +7,8 @@ export default class NodeListItem extends React.Component {
     };
 
     render() {
-        const {node} = this.props;
+        const {node} = this.props;      
+        node.version = node.version.includes('Waves') ? node.version.replace('Waves', 'Acryl') : node.version;
         return (
             <tr>
                 <td data-label="Node">

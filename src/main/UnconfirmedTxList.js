@@ -60,9 +60,26 @@ export default class UnconfirmedTxListContainer extends React.Component {
         return this.fetchData().then(this.setRefreshInterval);
     };
 
+    setAcryl = str =>  {
+        if(str.includes('WAVES') ) {
+            return str.replace('WAVES', 'ACRYL');
+        } else if (str.includes('Waves') ) {
+            return str.replace('Waves', 'Acryl');
+        } else {
+            return str;
+        }
+    }
+
     fetchData = () => {
         return ServiceFactory.transactionService().loadUnconfirmed()
-            .then(unconfirmed => this.setState({unconfirmed}));
+            .then(unconfirmed => {
+                console.log('unconfirmed :', unconfirmed);
+                for (const unconfirmedTx of unconfirmed) {
+                    unconfirmedTx.fee.currency.shortName =  this.setAcryl(unconfirmedTx.fee.currency.shortName);
+                    unconfirmedTx.fee.currency.displayName = this.setAcryl(unconfirmedTx.fee.currency.displayName);
+                }
+                this.setState({unconfirmed})
+            });
     };
 
     setRefreshInterval = () => {

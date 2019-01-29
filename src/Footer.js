@@ -2,7 +2,7 @@ import React from 'react';
 
 const socialLinks = [{
     id: 'github',
-    url: '#'
+    url: 'https://github.com/acrylplatform'
 }, {
     id: 'twitter',
     url: '#'

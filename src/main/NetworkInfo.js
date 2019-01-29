@@ -41,9 +41,9 @@ export default class NetworkInfoContainer extends React.Component {
         return infoService.loadInfo().then(info => {
             info.Version = info.Version.includes('Waves') ? info.Version.replace('Waves', 'Acryl') : info.Version;
             const change = Object.assign({}, this.state.info, info);
-            this.setState({info: change});
+            this.setState({ info: change });
 
-            infoService.loadDelay(info).then(info => this.setState({info}));
+            infoService.loadDelay(info).then(info => this.setState({ info }));
         });
     };
 

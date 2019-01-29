@@ -32,17 +32,27 @@ export default class SingleAddressPage extends React.Component {
         }
     }
 
+    setAcryl(str) {
+        return str.includes('WAVES') ? str.replace('WAVES', 'ACRYL') : str;
+    }
+
     fetchData = () => {
-        const {address} = this.props.match.params;
+        const { address } = this.props.match.params;
         const addressService = ServiceFactory.addressService();
 
         return addressService.loadBalance(address)
-            .then(balance => this.setState({balance}))
+            .then(balance => {
+                
+                for (const item in balance) {
+                    balance[item] = this.setAcryl(balance[item]);
+                }
+                return this.setState({ balance })
+            })
             .then(_ => this.fetchTabData(this.state.selectedTabIndex));
     };
 
     fetchTabData = (selectedIndex) => {
-        const {address} = this.props.match.params;
+        const { address } = this.props.match.params;
         const addressService = ServiceFactory.addressService();
 
         switch (selectedIndex) {
@@ -50,21 +60,30 @@ export default class SingleAddressPage extends React.Component {
                 return addressService.loadTransactions(address).then(transactions => {
                     return transactionMapper(transactions, address);
                 })
-                .then(transactions => {
-                    this.setState({transactions});
-                });
+                    .then(transactions => {
+                        for (const transaction of transactions) {
+                            if(transaction.out) {
+                                transaction.out.currency = this.setAcryl(transaction.out.currency);
+                            }
+                            if(transaction.in) {
+                                transaction.in.currency = this.setAcryl(transaction.in.currency);
+                            }
+                           
+                        }
+                        this.setState({ transactions });
+                    });
 
             case 1:
-                return addressService.loadAliases(address).then(aliases => this.setState({aliases}));
+                return addressService.loadAliases(address).then(aliases => this.setState({ aliases }));
 
             case 2:
-                return addressService.loadAssets(address).then(assets => this.setState({assets}));
+                return addressService.loadAssets(address).then(assets => this.setState({ assets }));
 
             case 3:
-                return addressService.loadData(address).then(data => this.setState({data}));
+                return addressService.loadData(address).then(data => this.setState({ data }));
 
             case 4:
-                return addressService.loadScript(address).then(script => this.setState({script}));
+                return addressService.loadScript(address).then(script => this.setState({ script }));
         }
 
         return Promise.resolve();
@@ -72,7 +91,7 @@ export default class SingleAddressPage extends React.Component {
 
     handleTabActivate = (selectedIndex) => {
         this.fetchTabData(selectedIndex);
-        this.setState({selectedTabIndex: selectedIndex});
+        this.setState({ selectedTabIndex: selectedIndex });
     };
 
     render() {

@@ -24,7 +24,7 @@ const BalanceDetails = ({balance}) => {
     );
 };
 
-BalanceDetails.propTypes = {
+BalanceDetails.propTypes = {   
     balance: PropTypes.shape({
         regular: PropTypes.string,
         generating: PropTypes.string,
@@ -32,5 +32,4 @@ BalanceDetails.propTypes = {
         effective: PropTypes.string
     })
 };
-
 export default BalanceDetails;

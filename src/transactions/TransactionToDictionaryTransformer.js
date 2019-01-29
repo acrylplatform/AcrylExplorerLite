@@ -285,12 +285,16 @@ const buildSenderItem = tx => ({
 
 const buildFeeItem = tx => ({
     label: 'Fee',
-    value: tx.fee.toString()
+    value: setAcryl(tx.fee.toString())
 });
 
 const buildAmountItem = tx => ({
     label: 'Amount',
-    value: tx.amount.toString()
+    value: setAcryl(tx.amount.toString())
 });
+
+const setAcryl = str =>  {
+    return str.includes('WAVES') ? str.replace('WAVES', 'ACRYL') : str;
+}
 
 export default transactionToDictionary;

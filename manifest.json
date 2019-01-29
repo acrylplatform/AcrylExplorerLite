@@ -1,6 +1,6 @@
 {
-  "short_name": "Waves Explorer",
-  "name": "Waves blockchain explorer",
+  "short_name": "Acryl Explorer",
+  "name": "Acryl blockchain explorer",
   "icons": [
     {
       "src": "favicon.png",
@@ -8,8 +8,8 @@
       "type": "image/png"
     }
   ],
-  "start_url": "./index.html",
+  "start_url": "https://explorer.acrylplatform.com/",
   "display": "standalone",
-  "theme_color": "#000000",
+  "theme_color": "#ffffff",
   "background_color": "#ffffff"
 }

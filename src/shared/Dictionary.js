@@ -7,7 +7,7 @@ export default class Dictionary extends React.Component {
     static propTypes = {
         items: PropTypes.arrayOf(PropTypes.shape(DictionaryItem.propTypes)).isRequired
     };
-
+    
     render() {
         return (
             <div className="dictionary">

@@ -1,10 +1,10 @@
 # Acryl Explorer Lite
 
-Acryl Testnet Blockchain Explorer
+Acryl Blockchain Explorer
 
 # Demo
 
-Demo is available on http://testnet.wavesexplorer.com
+Demo is available on [https://explorer.acrylplatform.com](https://explorer.acrylplatform.com)
 
 # Setup
 

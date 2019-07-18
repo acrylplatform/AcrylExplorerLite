@@ -14,6 +14,14 @@
                 )))
         );
     }
+
+    @each $num in 1,2 {
+        .column-sm-6:nth-child(#{$num}) {
+            @include breakpoint(sm) {
+                margin-bottom: 10px;
+            }
+        }
+    }
 }
 
 .line {
@@ -158,6 +166,7 @@
 
     .title {
         @include font(headline1);
+        margin-right: 5px;
     }
 
     .title-details {
@@ -249,7 +258,6 @@
         }
 
         > .dictionary-pair-value {
-            width: 100%;
             flex: 0 1 auto;
             padding: 0 14px;
             @include font(body);

@@ -11,17 +11,18 @@ Demo is available on [https://explorer.acrylplatform.com](https://explorer.acryl
 Install [NodeJS](https://nodejs.org/en/download/)
 
 Install gulp:
-```
+```sh
 npm install -g gulp-cli
 ```
 
 # Run locally
 
+```sh
 npm install
+npm start
+```
 
-node server.js
-
-Open http://localhost:3000 in browser. You'll see testnet version of explorer.
+Open http://localhost:8080 in browser. You'll see testnet version of explorer.
 
 # Build
 

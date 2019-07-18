@@ -21,6 +21,11 @@ export default class PeerList extends React.Component {
                 </thead>
                 <tbody>
                 {this.props.peers.map((peer, index) => {
+                    
+                    // Response server bad ip address
+                    peer.address = peer.address.replace("/","");
+                    if (peer.declaredAddress != "N/A") { peer.declaredAddress = peer.declaredAddress.replace("/",""); }
+
                     return (<PeerListItem key={index} peer={peer} />);
                 })}
                 </tbody>

@@ -16,7 +16,7 @@ export default class Currency {
         }
     }
 
-    static WAVES = new Currency({
+    static ACRYL = new Currency({
         id: '',
         displayName: 'Acryl',
         shortName: 'ACRYL',

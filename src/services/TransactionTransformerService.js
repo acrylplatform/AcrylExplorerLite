@@ -126,7 +126,7 @@ const transformMassTransfer = (currencyService, spamDetectionService, tx) => {
 const transformAlias = (currencyService, tx) => {
     return Promise.resolve(
         Object.assign(copyMandatoryAttributes(tx), {
-            fee: Money.fromCoins(tx.fee, Currency.WAVES),
+            fee: Money.fromCoins(tx.fee, Currency.ACRYL),
             alias: tx.alias
         })
     );
@@ -137,7 +137,7 @@ const transformLease = (currencyService, tx) => {
         return Object.assign(copyMandatoryAttributes(tx), {
             recipient: tx.recipient,
             fee: Money.fromCoins(tx.fee, feeCurrency),
-            amount: Money.fromCoins(tx.amount, Currency.WAVES),
+            amount: Money.fromCoins(tx.amount, Currency.ACRYL),
             status: tx.status
         })
     });
@@ -171,9 +171,9 @@ const transformExchange = (currencyService, tx) => {
         const amount = Money.fromCoins(tx.amount, currencyPair.amountAsset);
 
         return Object.assign(copyMandatoryAttributes(tx), {
-            fee: Money.fromCoins(tx.fee, Currency.WAVES),
-            buyFee: Money.fromCoins(tx.buyMatcherFee, Currency.WAVES),
-            sellFee: Money.fromCoins(tx.sellMatcherFee, Currency.WAVES),
+            fee: Money.fromCoins(tx.fee, Currency.ACRYL),
+            buyFee: Money.fromCoins(tx.buyMatcherFee, Currency.ACRYL),
+            sellFee: Money.fromCoins(tx.sellMatcherFee, Currency.ACRYL),
             price,
             amount,
             total: Money.fromTokens(price.toTokens() * amount.toTokens(), currencyPair.priceAsset),
@@ -195,7 +195,7 @@ const transformOrder = (order, assetPair) => {
         price: OrderPrice.fromBackendPrice(order.price, assetPair),
         timestamp: new DateTime(order.timestamp),
         expiration: new DateTime(order.expiration),
-        fee: Money.fromCoins(order.matcherFee, Currency.WAVES)
+        fee: Money.fromCoins(order.matcherFee, Currency.ACRYL)
     };
 };
 
@@ -203,7 +203,7 @@ const tranformBurn = (currencyService, tx) => {
     return currencyService.get(tx.assetId).then(currency => {
         return Object.assign(copyMandatoryAttributes(tx), {
             amount: Money.fromCoins(tx.amount, currency),
-            fee: Money.fromCoins(tx.fee, Currency.WAVES)
+            fee: Money.fromCoins(tx.fee, Currency.ACRYL)
         });
     });
 };
@@ -212,7 +212,7 @@ const transformReissue = (currencyService, tx) => {
     return currencyService.get(tx.assetId).then(currency => {
         return Object.assign(copyMandatoryAttributes(tx), {
             amount: Money.fromCoins(tx.quantity, currency),
-            fee: Money.fromCoins(tx.fee, Currency.WAVES),
+            fee: Money.fromCoins(tx.fee, Currency.ACRYL),
             reissuable: tx.reissuable,
 
         });
@@ -226,7 +226,7 @@ const transformIssue = (currencyService, tx) => {
     return currencyService.get(c.id).then(currency => {
         return Object.assign(copyMandatoryAttributes(tx), {
             amount: Money.fromCoins(tx.quantity, currency),
-            fee: Money.fromCoins(tx.fee, Currency.WAVES),
+            fee: Money.fromCoins(tx.fee, Currency.ACRYL),
             name: tx.name,
             reissuable: tx.reissuable,
             decimals: tx.decimals,

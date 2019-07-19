@@ -294,7 +294,7 @@ const buildAmountItem = tx => ({
 });
 
 const setAcryl = str =>  {
-    return str.includes('WAVES') ? str.replace('WAVES', 'ACRYL') : str;
+    return str.replace('WAVES', 'ACRYL');
 }
 
 export default transactionToDictionary;

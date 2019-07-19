@@ -16,6 +16,10 @@ export default class Loader extends React.Component {
         hasError: false
     };
 
+    componentWillUnmount() {
+        this.setState({loading: false});
+    }
+
     componentDidMount() {
         this.setState({loading: true});
         this.props.fetchData()

@@ -39,7 +39,7 @@ export default class NetworkInfoContainer extends React.Component {
     fetchData = () => {
         const infoService = ServiceFactory.infoService();
         return infoService.loadInfo().then(info => {
-            info.Version = info.Version.includes('Waves') ? info.Version.replace('Waves', 'Acryl') : info.Version;
+            info.Version = info.Version.replace('Waves', 'Acryl');
             const change = Object.assign({}, this.state.info, info);
             this.setState({ info: change });
 

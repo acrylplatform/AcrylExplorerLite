@@ -5,7 +5,7 @@ import Currency from './Currency';
 import TransactionRef from './TransactionRef';
 
 const CurrencyRef = ({currency}) => {
-    if (currency === Currency.WAVES)
+    if (currency === Currency.ACRYL)
         return currency.toString();
 
     return <TransactionRef txId={currency.id} text={currency.toString()} />;

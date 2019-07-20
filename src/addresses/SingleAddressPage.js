@@ -33,7 +33,7 @@ export default class SingleAddressPage extends React.Component {
     }
 
     setAcryl(str) {
-        return str.includes('WAVES') ? str.replace('WAVES', 'ACRYL') : str;
+        return str.replace('WAVES', 'ACRYL');
     }
 
     fetchData = () => {

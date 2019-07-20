@@ -61,13 +61,7 @@ export default class UnconfirmedTxListContainer extends React.Component {
     };
 
     setAcryl = str =>  {
-        if(str.includes('WAVES') ) {
-            return str.replace('WAVES', 'ACRYL');
-        } else if (str.includes('Waves') ) {
-            return str.replace('Waves', 'Acryl');
-        } else {
-            return str;
-        }
+        return str.replace('WAVES', 'ACRYL').replace('Waves', 'Acryl');
     }
 
     fetchData = () => {

@@ -164,7 +164,7 @@ body {
             &::after {
                 content: "Explorer";
                 left: 132px;
-                bottom: -8px;
+                bottom: -5px;
                 position: relative;
                 @include font(headline1);
             }
@@ -195,6 +195,8 @@ body {
 
     > .menu-list {
         padding-top: 39px;
+        flex-grow: 1;
+        min-height: calc(100vh - 350px);
 
         > .menu-item {
             position: relative;
@@ -309,7 +311,6 @@ body {
 
     > .menu-footer {
         @include font(body, basic500);
-        position: fixed;
         bottom: map-get($layout, padding-top);
 
         > * {
@@ -575,6 +576,7 @@ body {
             background: map-get($colors, iceBlue);
             position: relative;
             padding: 6px 40px 6px 8px;
+            margin-left: 12px;
 
             &:hover {
                 background: map-get($colors, paleBlue);

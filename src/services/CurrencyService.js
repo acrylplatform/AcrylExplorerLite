@@ -25,7 +25,7 @@ export class CurrencyService extends ApiClientService {
 
     get = assetId => {
         if (!assetId) {
-            return Promise.resolve(Currency.WAVES);
+            return Promise.resolve(Currency.ACRYL);
         }
 
         const currency = this.currencyCache[assetId];

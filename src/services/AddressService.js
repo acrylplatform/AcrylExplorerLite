@@ -25,8 +25,8 @@ export class AddressService extends ApiClientService {
         });
     };
 
-    loadTransactions = (address) => {
-        return this.getApi().transactions.address(address).then(transactionsResponse => {
+    loadTransactions = (address, limit, after) => {
+        return this.getApi().transactions.address(address, limit, after).then(transactionsResponse => {
             return this.transformer.transform(transactionsResponse.data[0]);
         });
     };

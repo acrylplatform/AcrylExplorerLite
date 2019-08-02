@@ -5,16 +5,16 @@ const socialLinks = [{
     url: 'https://github.com/acrylplatform'
 }, {
     id: 'twitter',
-    url: '#'
+    url: 'https://twitter.com/acrylplatform'
 }, {
     id: 'facebook',
-    url: '#'
+    url: 'https://www.facebook.com/acrylplatformofficial'
 }, {
     id: 'discord',
     url: '#'
 }, {
     id: 'telegram',
-    url: '#'
+    url: 'https://t.me/Acrylplatform'
 }, {
     id: 'reddit',
     url: '#'

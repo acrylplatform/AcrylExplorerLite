@@ -22,7 +22,7 @@ const transformSingle = (currencyService, spamDetectionService, tx) => {
             return transformReissue(currencyService, tx);
 
         case 6:
-            return tranformBurn(currencyService, tx);
+            return transformBurn(currencyService, tx);
 
         case 7:
             return transformExchange(currencyService, tx);
@@ -199,7 +199,7 @@ const transformOrder = (order, assetPair) => {
     };
 };
 
-const tranformBurn = (currencyService, tx) => {
+const transformBurn = (currencyService, tx) => {
     return currencyService.get(tx.assetId).then(currency => {
         return Object.assign(copyMandatoryAttributes(tx), {
             amount: Money.fromCoins(tx.amount, currency),

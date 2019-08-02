@@ -30,7 +30,7 @@ export default class TransactionList extends React.Component {
             return transactionMapper(transactions, address);
         })
             .then(transactions => {
-                if (transactions.length) { this.state.hasMore = false }
+                if (transactions.length < 100) { this.state.hasMore = false }
                 for (const transaction of transactions) {
                     if(transaction.out) {
                         transaction.out.currency = this.setAcryl(transaction.out.currency);

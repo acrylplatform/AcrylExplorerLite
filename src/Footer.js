@@ -8,7 +8,7 @@ const socialLinks = [{
     url: 'https://twitter.com/acrylplatform'
 }, {
     id: 'facebook',
-    url: '#'
+    url: 'https://www.facebook.com/acrylplatformofficial'
 }, {
     id: 'discord',
     url: '#'

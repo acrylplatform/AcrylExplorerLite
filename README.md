@@ -19,7 +19,7 @@ npm install -g gulp-cli
 
 npm install
 
-node server.js
+npm start
 
 Open http://localhost:3000 in browser. You'll see testnet version of explorer.
 
@@ -28,7 +28,10 @@ Open http://localhost:3000 in browser. You'll see testnet version of explorer.
 Build process creates ./distr directory for testnet, mainnet and devnet explorer configurations. 
 To create distribution, run:
 ```
-gulp distr
+gulp build-mainnet
+```
+```
+gulp build-testnet
 ```
 
 # Deployment

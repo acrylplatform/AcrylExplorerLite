@@ -65,7 +65,16 @@ export const nodeApi = (baseUrl) => {
             unconfirmed: () => get('/transactions/unconfirmed'),
             utxSize: () => get('/transactions/unconfirmed/size'),
             info: id => retryableGet(`/transactions/info/${id}`),
-            address: (address) => get(`/transactions/address/${address}/limit/${TRANSACTIONS_BY_ADDRESS_LIMIT}`)
+            address: (address, limit, after) => {
+                const top = limit || TRANSACTIONS_BY_ADDRESS_LIMIT;
+                const config = after ? {
+                    params: {
+                        after
+                    }
+                } : undefined;
+
+                return get(`/transactions/address/${address}/limit/${top}`, config);
+            }
         },
         aliases: {
             address: (alias) => get(`/alias/by-alias/${alias}`)

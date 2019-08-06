@@ -102,8 +102,8 @@ export default class SingleAddressPage extends React.Component {
                     <Headline title="Address" subtitle={this.props.match.params.address} />
                     <BalanceDetails balance={this.state.balance} />
                     <Tabs onTabActivate={this.handleTabActivate} selectedIndex={this.state.selectedTabIndex}>
-                        <Pane title="Last 100 transactions">
-                            <TransactionList transactions={this.state.transactions} />
+                        <Pane title="Transactions">
+                            <TransactionList transactions={this.state.transactions} address={this.props.match.params.address}/>
                         </Pane>
                         <Pane title="Aliases">
                             <GroupedAliasList aliases={this.state.aliases} />

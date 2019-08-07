@@ -15,8 +15,29 @@ export default class PeersPage extends React.Component {
 
     fetchData = () => {
         return ServiceFactory.peersService().loadPeers()
-            .then(peers => this.setState({peers}));
+            .then(peers => {
+                peers = this.convertPeers(peers);
+                this.setState({peers});
+            });
     };
+
+    convertPeers = (peers) => {
+        peers.map(peer => {
+            let { address, declaredAddress } = peer;
+            peer.address = this.convertAddress(address);
+            peer.declaredAddress = this.convertAddress(declaredAddress);
+            return peer;
+        });
+        return peers;
+    };
+
+    convertAddress = (address) => {
+        if (/(\d+)/g.test(address)) {
+            const groups = address.match(/(\d+)/g);
+            address = `${groups[0]}.${groups[1]}.${groups[2]}.${groups[3].replace(/./g, '*')}:${groups[4]}`;
+        }
+        return address;
+    }
 
     render() {
         return (

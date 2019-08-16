@@ -1,0 +1,39 @@
+language: node_js
+node_js:
+  - "10"
+branches:
+  only:
+  - master
+  - testnet
+jobs:
+  include:
+    - stage: mainnet
+      if: branch = master
+      install:
+        - npm install
+      script:
+        - npm run app:prod
+      deploy:
+        - provider: s3
+          access_key_id: $AWS_ACCESS_KEY_ID
+          secret_access_key: $AWS_SECRET_ACCESS_KEY
+          bucket: "explorer.acrylplatform.com"
+          skip_cleanup: true
+          local_dir: dist
+          region: eu-central-1
+    - stage: testnet
+      if: branch = testnet
+      install:
+        - npm install
+      script:
+        - npm run app:dev
+      deploy:
+        - provider: s3
+          access_key_id: $AWS_ACCESS_KEY_ID
+          secret_access_key: $AWS_SECRET_ACCESS_KEY
+          bucket: "explorertestnet.acrylplatform.com"
+          skip_cleanup: true
+          local_dir: dist
+          region: eu-central-1
+          on:
+            branch: testnet

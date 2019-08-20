@@ -15,9 +15,7 @@ export default class NodesPage extends React.Component {
     }
 
     fetchData = () => {
-        return ServiceFactory.nodesService().loadNodes(this).then(() => {
-            console.log('finish');
-        });
+        return ServiceFactory.nodesService().loadNodes(this).then(() => {});
     };
 
     render() {

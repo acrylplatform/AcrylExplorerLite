@@ -16,6 +16,11 @@ export default class TransactionList extends React.Component {
         transactions: PropTypes.arrayOf(PropTypes.object).isRequired
     };
 
+    componentWillMount() {
+        let status = this.props.transactions.length >= 100 ? true : false;
+        this.setState({ hasMore: status });
+    }
+
     setAcryl(str) {
         return str.replace('WAVES', 'ACRYL');
     }

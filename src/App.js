@@ -5,18 +5,18 @@ import {Route, Switch} from 'react-router';
 import {BrowserRouter as Router} from 'react-router-dom';
 import ScrollToTop from 'react-scroll-up';
 
-import {routeParams, routes} from './shared/Routing';
-import Search from './Search';
-import Header from './Header';
-import NavBar from './NavBar';
-import MainPage from './main/MainPage';
-import PeersPage from './peers/PeersPage';
-import NodesPage from './nodes/NodesPage';
-import BlocksPage from './blocks/BlocksPage';
-import SingleBlockPage from './blocks/SingleBlockPage';
-import SingleTransactionPage from './transactions/SingleTransactionPage';
-import SingleAddressPage from './addresses/SingleAddressPage';
-import SingleAliasPage from './aliases/SingleAliasPage';
+import {routeParams, routes} from './components/shared/Routing';
+import Search from './components/Search/Search';
+import Header from './components/Header/Header';
+import NavBar from './components/NavBar/NavBar';
+import MainPage from './pages/main/MainPage';
+import PeersPage from './pages/peers/PeersPage';
+import NodesPage from './pages/nodes/NodesPage';
+import BlocksPage from './pages/blocks/BlocksPage';
+import SingleBlockPage from './pages/blocks/SingleBlockPage';
+import SingleTransactionPage from './pages/transactions/SingleTransactionPage';
+import SingleAddressPage from './pages/addresses/SingleAddressPage';
+import SingleAliasPage from './pages/aliases/SingleAliasPage';
 
 class App extends React.Component {
     state = {

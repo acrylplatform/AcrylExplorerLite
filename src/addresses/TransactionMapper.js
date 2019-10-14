@@ -38,6 +38,9 @@ const mapTransactionToPromise = (tx, currentAddress) => {
         case 11:
             return mapMassTransfer(tx, currentAddress);
 
+        case 16:
+            return mapScriptInvocation(tx, currentAddress);
+
         default:
             return Object.assign({}, tx);
     }
@@ -75,6 +78,22 @@ const mapMassTransfer = (tx, currentAddress) => {
         });
 
         tail.in = moneyToObject(total);
+    }
+
+    return Object.assign(copyMandatoryAttributes(tx), tail);
+};
+
+const mapScriptInvocation = (tx, currentAddress) => {
+    const tail = {
+        recipient: tx.dappAddress
+    };
+    const payment = tx.payment ? moneyToObject(tx.payment) : null;
+    if (tx.sender === currentAddress) {
+        tail.direction = OUTGOING;
+        tail.out = payment;
+    } else {
+        tail.direction = INCOMING;
+        tail.in = payment;
     }
 
     return Object.assign(copyMandatoryAttributes(tx), tail);

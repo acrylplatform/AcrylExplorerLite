@@ -1,6 +1,6 @@
 {
   "name": "acryl-blockchain-explorer",
-  "version": "2.0.4",
+  "version": "2.0.5",
   "private": true,
   "description": "Acryl blockchain information tool",
   "repository": {
@@ -14,6 +14,7 @@
     "app:prod": "webpack --mode production --config=webpack.config.js"
   },
   "dependencies": {
+    "@acryl/signature-generator": "^6.0.1",
     "axios": "0.18.0",
     "decimal.js": "10.0.1",
     "formik": "^1.4.1",

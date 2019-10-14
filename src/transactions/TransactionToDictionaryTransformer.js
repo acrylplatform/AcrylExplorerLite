@@ -11,6 +11,10 @@ import Description from './Description';
 import ScriptInfo from '../shared/ScriptInfo';
 import DataInfo from '../shared/DataInfo';
 
+import MoneyInfo from '../components/MoneyInfo';
+import InvocationInfo from '../components/InvocationInfo';
+import StateChangesInfo from '../components/StateChangesInfo';
+
 const transactionToDictionary = (tx) => {
     switch (tx.type) {
         case 2:
@@ -50,9 +54,42 @@ const transactionToDictionary = (tx) => {
         case 14:
             return sponsorshipTransactionToItems(tx);
 
+        case 15:
+            return assetScriptTransactionToItems(tx);
+
+        case 16:
+            return scriptInvocationTransactionToItems(tx);
+
         default:
             return [];
     }
+};
+
+const scriptInvocationTransactionToItems = tx => {
+    const paymentItems = [{
+        label: 'Payment',
+        value: tx.payment ? <MoneyInfo value={tx.payment}/> : ''
+    }];
+
+    const stateItems = tx.stateChanges ? [{
+        label: 'State Changes',
+        value: <StateChangesInfo changes={tx.stateChanges} />
+    }] : [];
+
+    return [
+            ...buildTransactionHeaderItems(tx),
+            {
+                label: 'DApp Address',
+                value: <EndpointRef endpoint={tx.dappAddress} />
+            }, {
+                label: 'Call',
+                value: <InvocationInfo {...tx.call} />
+            },
+            ...paymentItems,
+            buildFeeItem(tx),
+            ...buildSenderAddressAndKeyItems(tx),
+            ...stateItems
+        ]
 };
 
 const dataTransactionToItems = tx => {
@@ -91,6 +128,19 @@ const sponsorshipTransactionToItems = tx => {
         },
         buildSenderItem(tx)
     ];
+};
+
+const assetScriptTransactionToItems = tx => {
+    return [
+            ...buildTransactionHeaderItems(tx),
+            {
+                label: 'Asset',
+                value: <CurrencyRef currency={tx.asset} />
+            },
+            buildScriptItem(tx),
+            buildFeeItem(tx),
+            ...buildSenderAddressAndKeyItems(tx)
+        ]
 };
 
 const aliasTransactionToItems = tx => {
@@ -238,6 +288,11 @@ const buildOrderItems = order => {
     ];
 };
 
+const buildScriptItem = tx => ({
+    label: 'Script',
+    value: <ScriptInfo script={tx.script} />
+});
+
 const buildDescriptionItem = tx => ({
     label: 'Description',
     value: <Description text={tx.description}/>
@@ -257,15 +312,30 @@ const buildTransactionHeaderItems = tx => {
     return [{
         label: 'Type',
         value: <React.Fragment><span>{tx.type}</span><Spacer size={14}/><TransactionBadge type={tx.type} /></React.Fragment>
-    }, buildTimestampItem(tx.timestamp), {
+    }, buildVersionItem(tx), buildTimestampItem(tx.timestamp), {
         label: 'Block',
         value: <BlockRef height={tx.height} />
-    }];
+    },buildProofsItem(tx)];
 };
+
+const buildVersionItem = tx => ({
+    label: 'Version',
+    value: tx.version
+});
+
+const buildSenderAddressAndKeyItems = tx => ([
+    buildSenderItem(tx),
+    buildSenderPublicKeyItem(tx)
+]);
 
 const buildQuantityItem = tx => ({
     label: 'Quantity',
     value: tx.amount.toString()
+});
+
+const buildProofsItem = tx => ({
+    label: 'Proofs',
+    value: tx.proofs.join(' ')
 });
 
 const buildReissuableItem = tx => ({
@@ -281,6 +351,11 @@ const buildRecipientItem = tx => ({
 const buildSenderItem = tx => ({
     label: 'Sender',
     value: <EndpointRef endpoint={tx.sender} />
+});
+
+const buildSenderPublicKeyItem = tx => ({
+    label: 'Sender PublicKey',
+    value: tx.senderPublicKey
 });
 
 const buildFeeItem = tx => ({

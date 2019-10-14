@@ -8,9 +8,26 @@
         window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","UA-131883943-2",{siteSpeedSampleRate:100}),ga("send","pageview");
     </script>
     <script async src='https://www.google-analytics.com/analytics.js'></script>
+    <!--FullStory-->
     <script>
-        window._fs_debug=!1,window._fs_host="acrylplatform.com",window._fs_org="HKQ49",window._fs_namespace="FS",function(n,e,o,t,c,s,i,f){o in n?n.console&&n.console.log&&n.console.log('FullStory namespace conflict. Please set window["_fs_namespace"].'):((i=n[o]=function(n,e,o){i.q?i.q.push([n,e,o]):i._api(n,e,o)}).q=[],(s=e.createElement(t)).async=1,s.src="https://"+_fs_host+"/s/fs.js",(f=e.getElementsByTagName(t)[0]).parentNode.insertBefore(s,f),i.identify=function(n,e,o){i(c,{uid:n},o),e&&i(c,e,o)},i.setUserVars=function(n,e){i(c,n,e)},i.event=function(n,e,o){i("event",{n:n,p:e},o)},i.shutdown=function(){i("rec",!1)},i.restart=function(){i("rec",!0)},i.consent=function(n){i("consent",!arguments.length||n)},i.identifyAccount=function(n,e){s="account",(e=e||{}).acctId=n,i(s,e)},i.clearUserCookie=function(){})}(window,document,window._fs_namespace,"script","user");
-    </script>
+      window['_fs_debug'] = false;
+      window['_fs_host'] = 'fullstory.com';
+      window['_fs_org'] = 'HKQ49';
+      window['_fs_namespace'] = 'FS';
+      (function(m,n,e,t,l,o,g,y){
+         if (e in m) {if(m.console && m.console.log) { m.console.log('FullStory namespace conflict. Please set window["_fs_namespace"].');} return;}
+         g=m[e]=function(a,b,s){g.q?g.q.push([a,b,s]):g._api(a,b,s);};g.q=[];
+         o=n.createElement(t);o.async=1;o.crossOrigin='anonymous';o.src='https://'+_fs_host+'/s/fs.js';
+         y=n.getElementsByTagName(t)[0];y.parentNode.insertBefore(o,y);
+         g.identify=function(i,v,s){g(l,{uid:i},s);if(v)g(l,v,s)};g.setUserVars=function(v,s){g(l,v,s)};g.event=function(i,v,s){g('event',{n:i,p:v},s)};
+         g.shutdown=function(){g("rec",!1)};g.restart=function(){g("rec",!0)};
+         g.log = function(a,b) { g("log", [a,b]) };
+         g.consent=function(a){g("consent",!arguments.length||a)};
+         g.identifyAccount=function(i,v){o='account';v=v||{};v.acctId=i;g(o,v)};
+         g.clearUserCookie=function(){};
+      })(window,document,window['_fs_namespace'],'script','user');
+      </script>
+    <!--End FullStory-->
     <script type="application/ld+json">
       {
         "@context": "http://schema.org",

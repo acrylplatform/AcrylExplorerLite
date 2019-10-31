@@ -2,14 +2,20 @@ import Currency from '../shared/Currency';
 import Money from '../shared/Money';
 import OrderPrice from '../shared/OrderPrice';
 import DateTime from '../shared/DateTime';
+import {libs} from '@acryl/signature-generator';
 
-const transformMultiple = (currencyService, spamDetectionService, transactions) => {
-    const promises = transactions.map(item => transformSingle(currencyService, spamDetectionService, item));
+const transformMultiple = (currencyService, spamDetectionService, stateChangeService, transactions) => {
+    const promises = transactions.map(item => transform(currencyService,
+        spamDetectionService, stateChangeService, item, false));
 
     return Promise.all(promises);
 };
 
-const transformSingle = (currencyService, spamDetectionService, tx) => {
+const transformSingle = (currencyService, spamDetectionService, stateChangeService, tx) => {
+    return transform(currencyService, spamDetectionService, stateChangeService, tx, true);
+};
+
+const transform = (currencyService, spamDetectionService, stateChangeService, tx, shouldLoadDetails) => {
     switch (tx.type) {
         case 2:
         case 4:
@@ -22,7 +28,7 @@ const transformSingle = (currencyService, spamDetectionService, tx) => {
             return transformReissue(currencyService, tx);
 
         case 6:
-            return tranformBurn(currencyService, tx);
+            return transformBurn(currencyService, tx);
 
         case 7:
             return transformExchange(currencyService, tx);
@@ -48,24 +54,88 @@ const transformSingle = (currencyService, spamDetectionService, tx) => {
         case 14:
             return transformSponsorship(currencyService, tx);
 
+        case 15:
+            return transformAssetScript(currencyService, tx);
+
+        case 16:
+            return transformScriptInvocation(currencyService, stateChangeService, tx, shouldLoadDetails);
+
+
         default:
             return Promise.resolve(Object.assign({}, tx));
     }
 };
 
-const copyMandatoryAttributes = tx => ({
-    id: tx.id,
-    type: tx.type,
-    timestamp: new DateTime(tx.timestamp),
-    sender: tx.sender,
-    height: tx.height
-});
+const DEFAULT_FUNCTION_CALL = {
+    function: 'default',
+    args: []
+};
+
+const copyMandatoryAttributes = tx => {
+    let proofs = tx.proofs;
+
+    if (!proofs || proofs.length === 0) {
+        proofs = [tx.signature];
+    }
+
+    return {
+        id: tx.id,
+        type: tx.type,
+        version: tx.version,
+        timestamp: new DateTime(tx.timestamp),
+        sender: tx.sender,
+        senderPublicKey: tx.senderPublicKey,
+        height: tx.height,
+        proofs
+    };
+};
 
 const loadAmountAndFeeCurrencies = (currencyService, amountAssetId, feeAssetId) => {
     return Promise.all([
         currencyService.get(amountAssetId),
         currencyService.get(feeAssetId)
     ]);
+};
+
+const transformScriptInvocation = (currencyService, stateChangeService, tx, shouldLoadDetails) => {
+    return currencyService.get(tx.feeAssetId).then(feeCurrency => {
+
+        const promise = tx.payment && tx.payment.length > 0
+            ? currencyService.get(tx.payment[0].assetId)
+                .then(currency => Money.fromCoins(tx.payment[0].amount, currency))
+            : Promise.resolve(null);
+
+        return promise.then(payment => {
+            
+            const result = Object.assign(copyMandatoryAttributes(tx), {
+                dappAddress: tx.dApp,
+                call: tx.call || DEFAULT_FUNCTION_CALL,
+                payment,
+                fee: Money.fromCoins(tx.fee, feeCurrency)
+            });
+
+            console.log(result);
+            // if (!shouldLoadDetails)
+                return result;
+
+            return stateChangeService.loadStateChanges(tx.id).then(changes => {
+                console.log(changes);
+                result.stateChanges = changes.stateChanges;
+            
+                return result;
+            }).catch(() => result);
+        });
+    });
+};
+
+const transformAssetScript = (currencyService, tx) => {
+    return currencyService.get(tx.assetId).then(asset => {
+        return Object.assign(copyMandatoryAttributes(tx), {
+            script: tx.script,
+            asset,
+            fee: Money.fromCoins(tx.fee, Currency.WAVES)
+        })
+    });
 };
 
 const transformData = (currencyService, tx) => {
@@ -199,7 +269,7 @@ const transformOrder = (order, assetPair) => {
     };
 };
 
-const tranformBurn = (currencyService, tx) => {
+const transformBurn = (currencyService, tx) => {
     return currencyService.get(tx.assetId).then(currency => {
         return Object.assign(copyMandatoryAttributes(tx), {
             amount: Money.fromCoins(tx.amount, currency),
@@ -252,15 +322,18 @@ const transformTransfer = (currencyService, spamDetectionService, tx) => {
 
 
 export class TransactionTransformerService {
-    constructor(currencyService, spamDetectionService) {
+    constructor(currencyService, spamDetectionService, stateChangeService) {
         this.currencyService = currencyService;
         this.spamDetectionService = spamDetectionService;
+        this.stateChangeService = stateChangeService;
     }
 
     transform = (input) => {
         if (Array.isArray(input))
-            return transformMultiple(this.currencyService, this.spamDetectionService, input);
+            return transformMultiple(this.currencyService,
+                this.spamDetectionService, this.stateChangeService, input);
 
-        return transformSingle(this.currencyService, this.spamDetectionService, input);
+        return transformSingle(this.currencyService,
+            this.spamDetectionService, this.stateChangeService, input);
     };
 }

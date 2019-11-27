@@ -40,7 +40,7 @@ export default class SingleAddressPage extends React.Component {
         }
     }
     componentDidMount() {
-        if(this.GetURLParameter('tabs') == 'data') {
+        if(this.GetURLParameter('tab') == 'data') {
             this.setState({ selectedTabIndex: 3 });
         }
     }

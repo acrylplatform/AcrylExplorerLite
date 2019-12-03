@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {withRouter} from 'react-router';
 
 import ServiceFactory from './services/ServiceFactory';
@@ -102,7 +101,7 @@ class Search extends React.PureComponent {
                 <input
                     className="search-input"
                     ref={this.inputRef}
-                    placeholder="Search address, TX id, block sig"
+                    placeholder="Search address, transaction id, block signature, alias"
                     onKeyUp={this.handleKeyUp}
                     onChange={this.handleChange}
                     value={this.state.searchText}

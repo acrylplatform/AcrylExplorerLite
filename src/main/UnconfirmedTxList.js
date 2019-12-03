@@ -73,7 +73,6 @@ export default class UnconfirmedTxListContainer extends React.Component {
     fetchData = () => {
         return ServiceFactory.transactionService().loadUnconfirmed()
             .then(unconfirmed => {
-                console.log('unconfirmed :', unconfirmed);
                 for (const unconfirmedTx of unconfirmed) {
                     unconfirmedTx.fee.currency.shortName =  this.setAcryl(unconfirmedTx.fee.currency.shortName);
                     unconfirmedTx.fee.currency.displayName = this.setAcryl(unconfirmedTx.fee.currency.displayName);

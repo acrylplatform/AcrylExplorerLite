@@ -4,6 +4,9 @@ const node2Url = 'https://node2.acrylplatform.com';
 const node3Url = 'https://node3.acrylplatform.com';
 const node4Url = 'https://node4.acrylplatform.com';
 const node5Url = 'https://node5.acrylplatform.com';
+const node6Url = 'https://node6.acrylplatform.com';
+const node7Url = 'https://node7.acrylplatform.com';
+const node10Url = 'https://node10.acrylplatform.com';
 
 export default {
     networkId: 'mainnet',
@@ -15,5 +18,9 @@ export default {
         {url: node2Url, maintainer: 'Acryl'},
         {url: node3Url, maintainer: 'Acryl'},
         {url: node4Url, maintainer: 'Acryl'},
-        {url: node5Url, maintainer: 'Acryl'}]
+        {url: node5Url, maintainer: 'Acryl'},
+        {url: node6Url, maintainer: 'Acryl'},
+        {url: node7Url, maintainer: 'Acryl'},
+        {url: node10Url, maintainer: 'Acryl'}]
+    
 };

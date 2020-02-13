@@ -52,7 +52,7 @@ class NavBar extends React.Component {
                     onSwitchNetwork={this.switchNetwork}
                     onUpdateCustomNetwork={this.applySettings}
                 />
-                <NavMenu onAfterNavigate={this.props.onAfterNavigate} />
+                <NavMenu onAfterNavigate={this.props.onAfterNavigate} current={configurationService.get()} />
                 <Footer version={version} />
             </div>
         );

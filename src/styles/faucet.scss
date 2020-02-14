@@ -1,0 +1,31 @@
+@import "variables";
+@import "mixins.scss";
+
+.LeftBlock{
+    min-width: 304px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+}
+.AdressInput{
+    margin-bottom: 10px;
+}
+.SubbmitButton{
+    margin-top: 10px;
+}
+.FaucetForm{
+    min-width: 304px;
+    max-width: 504px;
+}
+
+@media (max-width:1100px){
+    .FuacetSection{
+        flex-wrap: wrap;
+    }
+}
+.SubbmitButton{
+   margin-bottom: 20px; 
+}
+.FaucetResponseMessage{
+    color:orange;
+    line-height: 10px;
+}

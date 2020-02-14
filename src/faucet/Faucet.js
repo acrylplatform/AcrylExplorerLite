@@ -1,45 +1,38 @@
 import React from 'react';
-import axios from 'axios';
 import ServiceFactory from '../services/ServiceFactory';
 import transactionMapper from '../addresses/TransactionMapper';
 import FaucetBlock from './LeftBlock';
-
-// import { broadcast, sponsorship, transfer, waitForTx } from '@acryl/acryl-transactions'
-
-// export const MASTER_SEED = 'test acc 2'
-// const API_BASE = 'https://nodestestnet.acrylplatform.com'
-
-// const ttx = transfer({ recipient: '3JHj9mVz1URexGe4MHCCEMBm4gJTkhqJnv5', amount: 270000000, feeAssetId: null }, MASTER_SEED)
-// broadcast(ttx, API_BASE)
+import config from '../configuration/config.testnet';
 import TransactionList from '../addresses/TransactionList';
 
 export default class Faucet extends React.Component {
     state = {
         transactions: [],
-        address: '3JNbXos1asm3ZG47QG1MWjknQhvMDqrrH2v'  
+        address: config.faucetAddress,  
     }
     setAcryl(str) {
         return str.replace('WAVES', 'ACRYL');
     }
 
-    componentDidMount(){
-        const addressService = ServiceFactory.addressService();
+    async componentDidMount(){
         const address = this.state.address;
-        addressService.loadTransactions(address).then(transactions => {
-            return transactionMapper(transactions, address);
-        })
-            .then(transactions => {
-                for (const transaction of transactions) {
-                    if(transaction.out) {
-                        transaction.out.currency = this.setAcryl(transaction.out.currency);
-                    }
-                    if(transaction.in) {
-                        transaction.in.currency = this.setAcryl(transaction.in.currency);
-                    }
-                   
+        try{
+            const addressService = ServiceFactory.addressService();
+            const transactions = await addressService.loadTransactions(address);
+            const transactionMap = await transactionMapper(transactions, address);
+            for (const transaction of transactionMap) {
+                if(transaction.out) {
+                    transaction.out.currency = this.setAcryl(transaction.out.currency);
                 }
-                this.setState({ transactions });
-            });
+                if(transaction.in) {
+                    transaction.in.currency = this.setAcryl(transaction.in.currency);
+                }
+            }
+            await this.setState({ transactions });
+        } catch(e) {
+            await this.setState({ transactions: [] });
+        }
+        
     }
 
     render() {

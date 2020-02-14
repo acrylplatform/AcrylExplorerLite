@@ -14,7 +14,6 @@
     "app:prod": "webpack --mode production --config=webpack.config.js"
   },
   "dependencies": {
-    "@acryl/acryl-transactions": "^3.16.7",
     "@acryl/signature-generator": "^6.0.1",
     "axios": "0.18.0",
     "decimal.js": "10.0.1",

@@ -277,6 +277,20 @@ body {
                         background-position: 0 -84px;
                     }
                 }
+
+                &-faucet {
+                    a {
+                        &::after {
+                            background-position: -28px -110px;
+                        }
+                        &:hover::after {
+                            background-position: 0 -110px;
+                        }
+                    }
+                    &.current a::after {
+                        background-position: 0 -110px;
+                    }
+                }
             }
 
             a {

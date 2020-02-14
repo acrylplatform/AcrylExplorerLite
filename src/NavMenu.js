@@ -24,7 +24,7 @@ const items = [{
 }, {
     title: 'Faucet',
     route: routes.faucet.list,
-    icon: 'icon-nodes'
+    icon: 'icon-faucet'
 }];
 
 const NetworkShape = PropTypes.shape({

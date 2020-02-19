@@ -35,8 +35,8 @@ const NetworkShape = PropTypes.shape({
     spamListUrl: PropTypes.string
 });
 
-const networkId = 'testnet';
-const pathname = '/faucet';
+const NETWORK_ID_TESTNET = 'testnet';
+const FAUCET_PATHNAME = '/faucet';
 
 class NavMenu extends React.Component {
     static propTypes = {
@@ -64,14 +64,14 @@ class NavMenu extends React.Component {
     };
 
     render() {
-        if (this.props.current.networkId != networkId && window.location.pathname == pathname) {
+        if (this.props.current.networkId != NETWORK_ID_TESTNET && window.location.pathname == FAUCET_PATHNAME) {
             return <Redirect to="/" />;
         } else {
             return (
                 <div className="menu-list">
                     {this.state.items.map((item, index) => {
                         const current = this.state.current === item;
-                        if (item.title != 'Faucet' || this.props.current.networkId == networkId) {
+                        if (item.title != 'Faucet' || this.props.current.networkId == NETWORK_ID_TESTNET) {
                             return (
                                 <NavMenuItem
                                     key={index}

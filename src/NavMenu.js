@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {withRouter} from 'react-router';
+import {withRouter, Redirect} from 'react-router';
 
 import {routes} from './shared/Routing';
 import NavMenuItem from './NavMenuItem';
@@ -61,22 +61,26 @@ class NavMenu extends React.Component {
     };
 
     render() {
-        return (
-            <div className="menu-list">
-                {this.state.items.map((item, index) => {
-                    const current = this.state.current === item;
-                    if (item.title != 'Faucet' || this.props.current.networkId == 'testnet') {
-                        return (
-                            <NavMenuItem
-                                key={index}
-                                item={item} current={current}
-                                onNavigate={this.handleNavigate}
-                            />
-                        );
-                    }
-                })}
-            </div>
-        );
+        if (this.props.current.networkId != 'testnet' && window.location.pathname == '/faucet') {
+            return <Redirect to="/" />;
+        } else {
+            return (
+                <div className="menu-list">
+                    {this.state.items.map((item, index) => {
+                        const current = this.state.current === item;
+                        if (item.title != 'Faucet' || this.props.current.networkId == 'testnet') {
+                            return (
+                                <NavMenuItem
+                                    key={index}
+                                    item={item} current={current}
+                                    onNavigate={this.handleNavigate}
+                                />
+                            );
+                        }
+                    })}
+                </div>
+            );
+        }
     }
 }
 

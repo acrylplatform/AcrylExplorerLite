@@ -11,7 +11,7 @@ export default {
     nodes: [
         {url: nodeUrl, maintainer: 'Acryl'}
     ],
-    getCoinsAddress :getCoinsAddress,
+    getCoinsAddress: getCoinsAddress,
     captchaKey: captchaKey,
     faucetAddress: faucetAddress,
 };

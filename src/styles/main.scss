@@ -8,6 +8,7 @@
 @import "nodes.scss";
 @import "address.scss";
 @import "fonts.scss";
+@import "faucet.scss";
 
 html {
     height: 100%;
@@ -274,6 +275,20 @@ body {
                      }
                     &.current a::after {
                         background-position: 0 -84px;
+                    }
+                }
+
+                &-faucet {
+                    a {
+                        &::after {
+                            background-position: -28px -110px;
+                        }
+                        &:hover::after {
+                            background-position: 0 -110px;
+                        }
+                    }
+                    &.current a::after {
+                        background-position: 0 -110px;
                     }
                 }
             }

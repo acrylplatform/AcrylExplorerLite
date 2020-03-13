@@ -21,11 +21,24 @@ const items = [{
     title: 'Nodes',
     route: routes.nodes.list,
     icon: 'icon-nodes'
+}, {
+    title: 'Faucet',
+    route: routes.faucet.list,
+    icon: 'icon-faucet'
 }];
+
+const NetworkShape = PropTypes.shape({
+    networkId: PropTypes.string,
+    displayName: PropTypes.string,
+    url: PropTypes.string,
+    apiBaseUrl: PropTypes.string,
+    spamListUrl: PropTypes.string
+});
 
 class NavMenu extends React.Component {
     static propTypes = {
-        onAfterNavigate: PropTypes.func.isRequired
+        onAfterNavigate: PropTypes.func.isRequired,
+        current: NetworkShape.isRequired
     };
 
     constructor(props) {
@@ -52,13 +65,15 @@ class NavMenu extends React.Component {
             <div className="menu-list">
                 {this.state.items.map((item, index) => {
                     const current = this.state.current === item;
-                    return (
-                        <NavMenuItem
-                            key={index}
-                            item={item} current={current}
-                            onNavigate={this.handleNavigate}
-                        />
-                    );
+                    if (item.title != 'Faucet' || this.props.current.networkId == 'testnet') {
+                        return (
+                            <NavMenuItem
+                                key={index}
+                                item={item} current={current}
+                                onNavigate={this.handleNavigate}
+                            />
+                        );
+                    }
                 })}
             </div>
         );

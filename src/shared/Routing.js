@@ -15,6 +15,9 @@ export const routes = {
     peers: {
         list: `/peers`
     },
+    faucet: {
+        list: `/faucet`
+    },
     blocks: {
         list: blocks,
         one: (height) => `${blocks}/${height}`

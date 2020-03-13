@@ -10,6 +10,7 @@ import Search from './Search';
 import Header from './Header';
 import NavBar from './NavBar';
 import MainPage from './main/MainPage';
+import Faucet from './faucet/Faucet';
 import PeersPage from './peers/PeersPage';
 import NodesPage from './nodes/NodesPage';
 import BlocksPage from './blocks/BlocksPage';
@@ -47,10 +48,11 @@ class App extends React.Component {
                             <Route exact path={routes.blocks.one(routeParams.blockHeight)} component={SingleBlockPage} />
                             <Route path={routes.nodes.list} component={NodesPage} />
                             <Route path={routes.peers.list} component={PeersPage} />
+                            <Route path={routes.faucet.list} component={Faucet} />
                             <Route exact path={routes.transactions.one(routeParams.transactionId)} component={SingleTransactionPage} />
                             <Route exact path={routes.addresses.one(routeParams.address)} component={SingleAddressPage} />
                             <Route exact path={routes.aliases.one(routeParams.alias)} component={SingleAliasPage} />
-                            <Route path={routes.root} component={MainPage} />
+                            <Route path={routes.root} component={MainPage} /> 
                         </Switch>
                         </div>
                     </div>

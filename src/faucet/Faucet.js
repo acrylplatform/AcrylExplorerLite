@@ -3,7 +3,7 @@ import ServiceFactory from "../services/ServiceFactory";
 import transactionMapper from "../addresses/TransactionMapper";
 import FaucetBlock from "./LeftBlock";
 import config from "../configuration/config.testnet";
-import TransactionList from "../addresses/TransactionList";
+import TransactionListFaucet from "../addresses/TransactionListFaucet";
 
 export default class Faucet extends React.Component {
     state = {
@@ -49,7 +49,7 @@ export default class Faucet extends React.Component {
                         <FaucetBlock />
                     </div>
                     <div className="TransactionList column-md-12">
-                        <TransactionList
+                        <TransactionListFaucet
                             transactions={this.state.transactions}
                             address={this.state.address}
                         />

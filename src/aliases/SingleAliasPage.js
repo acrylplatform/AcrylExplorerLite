@@ -1,7 +1,7 @@
 import React from 'react';
 import {Redirect} from 'react-router-dom';
 
-import {routeBuilder} from '../shared/Routing';
+import {routes} from '../shared/Routing';
 import ServiceFactory from '../services/ServiceFactory';
 
 import Loader from '../shared/Loader';

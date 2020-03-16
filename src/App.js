@@ -20,8 +20,6 @@ import SingleAddressPage from './addresses/SingleAddressPage';
 import SingleAliasPage from './aliases/SingleAliasPage';
 import { redirectService } from './services/RedirectService';
 
-
-
 class App extends React.Component {
     state = {
         mobileMenuVisible: null

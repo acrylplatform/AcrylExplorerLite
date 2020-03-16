@@ -18,6 +18,9 @@ import SingleBlockPage from './blocks/SingleBlockPage';
 import SingleTransactionPage from './transactions/SingleTransactionPage';
 import SingleAddressPage from './addresses/SingleAddressPage';
 import SingleAliasPage from './aliases/SingleAliasPage';
+import { redirectService } from './services/RedirectService';
+
+
 
 class App extends React.Component {
     state = {
@@ -27,6 +30,11 @@ class App extends React.Component {
     handleMobileMenuToggle = () => {
         this.setState({mobileMenuVisible: !this.state.mobileMenuVisible});
     };
+
+    componentDidMount() {
+        const {networkId, newPathname} = redirectService.parseUrl();
+        redirectService.switchNetwork(networkId, newPathname);
+    }
 
     render() {
         const isVisible = this.state.mobileMenuVisible;
@@ -52,7 +60,7 @@ class App extends React.Component {
                             <Route exact path={routes.transactions.one(routeParams.transactionId)} component={SingleTransactionPage} />
                             <Route exact path={routes.addresses.one(routeParams.address)} component={SingleAddressPage} />
                             <Route exact path={routes.aliases.one(routeParams.alias)} component={SingleAliasPage} />
-                            <Route path={routes.root} component={MainPage} /> 
+                            <Route path={routes.root} component={MainPage} />
                         </Switch>
                         </div>
                     </div>

@@ -31,7 +31,6 @@ class RedirectService{
                 }
             }
         }
-        // console.log(networkId, newPathname);
         return {networkId, newPathname}
     }
 }

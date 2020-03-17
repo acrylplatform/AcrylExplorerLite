@@ -2,11 +2,7 @@ import ServiceFactory from './ServiceFactory';
 
 class RedirectService{
     redirectOnHome = (newPath) => {
-        if(newPath){
-            window.location.href = newPath;
-        }else{
-            window.location.href = '';
-        }
+        window.location.href = newPath ? newPath : '';
     }
 
     switchNetwork = (networkId, newPath) => {
@@ -27,7 +23,7 @@ class RedirectService{
                     newPathname += '';
                 }else{
                     newPathname += pathArray[i];
-                    newPathname += (i != pathArray.length - 1) ?'/': '';
+                    newPathname += (i != pathArray.length - 1) ? '/' : '';
                 }
             }
         }

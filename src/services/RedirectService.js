@@ -1,4 +1,4 @@
-import ServiceFactory from '../services/ServiceFactory';
+import ServiceFactory from './ServiceFactory';
 
 class RedirectService{
     redirectOnHome = (newPath) => {
@@ -18,8 +18,8 @@ class RedirectService{
 
     parseUrl = () => {
         const pathArray = window.location.pathname.split('/');
-        var networkId = null;
-        var newPathname = "";
+        let networkId = null;
+        let newPathname = "";
         if(pathArray && pathArray[1] != '') {
             for (let i = 0; i < pathArray.length; i++) {
                 if (pathArray[i] == 'testnet' || pathArray[i] == 'mainnet') {

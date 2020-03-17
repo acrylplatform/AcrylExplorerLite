@@ -20,7 +20,7 @@ class RedirectService{
         const pathArray = window.location.pathname.split('/');
         let networkId = null;
         let newPathname = "";
-        if(pathArray && pathArray[1] != '') {
+        if(pathArray[1] != '') {
             for (let i = 0; i < pathArray.length; i++) {
                 if (pathArray[i] == 'testnet' || pathArray[i] == 'mainnet') {
                     networkId = pathArray[1];

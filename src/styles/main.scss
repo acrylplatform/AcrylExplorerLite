@@ -151,7 +151,10 @@ body {
         }
 
         > .logo {
-            background: url('../images/waves-124.svg') no-repeat 0 10px;
+            background-image: url('../images/acryl_logo_explorer.svg');
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-size: cover;
             min-height: 44px;
 
             a {
@@ -159,16 +162,16 @@ body {
                 height: 44px;
                 position: absolute;
                 z-index: 1;
-                width: 220px;
+                width: 100%;
             }
 
-            &::after {
-                content: "Explorer";
-                left: 132px;
-                bottom: -8px;
-                position: relative;
-                @include font(headline1);
-            }
+            //&::after {
+            //    content: "Explorer";
+            //    left: 132px;
+            //    bottom: -8px;
+            //    position: relative;
+            //    @include font(headline1);
+            //}
         }
     }
 }

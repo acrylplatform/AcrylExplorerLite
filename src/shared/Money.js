@@ -1,26 +1,31 @@
-import {Decimal} from 'decimal.js';
+import { Decimal } from 'decimal.js';
 import isNumber from 'lodash/isNumber';
 import Currency from './Currency';
 
 const DECIMAL_SEPARATOR = '.';
 const THOUSANDS_SEPARATOR = ',';
 
-const format = (value, currency) => value.toFixed(currency.precision, currency.roundingMode);
+const format = (value, currency) =>
+    value.toFixed(currency.precision, currency.roundingMode);
 const validateCurrency = (expected, actual) => {
     if (expected.id !== actual.id)
-        throw new Error('Currencies must be the same for operands. Expected: ' +
-            expected.displayName + '; Actual: ' + actual.displayName);
+        throw new Error(
+            'Currencies must be the same for operands. Expected: ' +
+                expected.displayName +
+                '; Actual: ' +
+                actual.displayName
+        );
 };
 
-const fromTokensToCoins = (valueInTokens, currencyPrecision) => valueInTokens
-    .mul(Math.pow(10, currencyPrecision)).trunc();
+const fromTokensToCoins = (valueInTokens, currencyPrecision) =>
+    valueInTokens.mul(Math.pow(10, currencyPrecision)).trunc();
 
-const fromCoinsToTokens = (valueInCoins, currencyPrecision) => valueInCoins
-    .trunc().div(Math.pow(10, currencyPrecision));
+const fromCoinsToTokens = (valueInCoins, currencyPrecision) =>
+    valueInCoins.trunc().div(Math.pow(10, currencyPrecision));
 
 // in 2016 Safari doesn't support toLocaleString()
 // that's why we need this method
-const formatWithThousandsSeparator = (formattedAmount) => {
+const formatWithThousandsSeparator = formattedAmount => {
     var parts = formattedAmount.split(DECIMAL_SEPARATOR);
     parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, THOUSANDS_SEPARATOR);
 
@@ -29,14 +34,14 @@ const formatWithThousandsSeparator = (formattedAmount) => {
 
 export default class Money {
     constructor(amount, currency) {
-        if (amount === undefined)
-            throw new Error('Amount is required');
+        if (amount === undefined) throw new Error('Amount is required');
 
-        if (currency === undefined)
-            throw new Error('Currency is required');
+        if (currency === undefined) throw new Error('Currency is required');
 
-        this.amount = new Decimal(amount)
-            .toDecimalPlaces(currency.precision, Decimal.ROUND_FLOOR);
+        this.amount = new Decimal(amount).toDecimalPlaces(
+            currency.precision,
+            Decimal.ROUND_FLOOR
+        );
         this.currency = currency;
     }
 
@@ -53,21 +58,26 @@ export default class Money {
     };
 
     formatAmount = (stripZeroes, useThousandsSeparator) => {
-        const result = stripZeroes ?
-            this.toTokens().toFixed(this.amount.decimalPlaces()) :
-            format(this.amount, this.currency);
+        const result = stripZeroes
+            ? this.toTokens().toFixed(this.amount.decimalPlaces())
+            : format(this.amount, this.currency);
 
-        return useThousandsSeparator ? formatWithThousandsSeparator(result) : result;
+        return useThousandsSeparator
+            ? formatWithThousandsSeparator(result)
+            : result;
     };
 
     toTokens = () => {
-        var result = fromCoinsToTokens(fromTokensToCoins(this.amount, this.currency.precision),
-            this.currency.precision);
+        var result = fromCoinsToTokens(
+            fromTokensToCoins(this.amount, this.currency.precision),
+            this.currency.precision
+        );
 
         return result.toNumber();
     };
 
-    toCoins = () => fromTokensToCoins(this.amount, this.currency.precision).toNumber();
+    toCoins = () =>
+        fromTokensToCoins(this.amount, this.currency.precision).toNumber();
 
     plus = money => {
         validateCurrency(this.currency, money.currency);
@@ -106,8 +116,7 @@ export default class Money {
     };
 
     multiply = multiplier => {
-        if (!isNumber(multiplier))
-            throw new Error('Number is expected');
+        if (!isNumber(multiplier)) throw new Error('Number is expected');
 
         if (isNaN(multiplier))
             throw new Error('Multiplication by NaN is not supported');
@@ -115,9 +124,9 @@ export default class Money {
         return new Money(this.amount.mul(multiplier), this.currency);
     };
 
-    toString = () => this.formatAmount(true, true) + ' ' + this.currency.toString();
+    toString = () =>
+        this.formatAmount(true, true) + ' ' + this.currency.toString();
 }
 
 // set up decimal to format 0.00000001 as is instead of 1e-8
-Decimal.config({toExpNeg: -(Currency.WAVES.precision + 1)});
-
+Decimal.config({ toExpNeg: -(Currency.ACRYL.precision + 1) });

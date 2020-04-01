@@ -8,17 +8,25 @@ import ServiceFactory from '../services/ServiceFactory';
 
 export class UnconfirmedTxList extends React.Component {
     static propTypes = {
-        transactions: PropTypes.arrayOf(PropTypes.object).isRequired
+        transactions: PropTypes.arrayOf(PropTypes.object).isRequired,
     };
 
     renderList() {
         return (
             <React.Fragment>
                 <div className="panel-title">
-                    <span className="title">Unconfirmed Transactions ({this.props.transactions.length})</span>
+                    <span className="title">
+                        Unconfirmed Transactions (
+                        {this.props.transactions.length})
+                    </span>
                 </div>
-                {this.props.transactions.map((item) => {
-                    return (<UnconfirmedTxListItem key={item.id} transaction={item}/>);
+                {this.props.transactions.map(item => {
+                    return (
+                        <UnconfirmedTxListItem
+                            key={item.id}
+                            transaction={item}
+                        />
+                    );
                 })}
             </React.Fragment>
         );
@@ -28,7 +36,9 @@ export class UnconfirmedTxList extends React.Component {
         return (
             <React.Fragment>
                 <div className="panel-empty-icon"></div>
-                <div className="line wide panel-empty-label"><label>All transactions are confirmed</label></div>
+                <div className="line wide panel-empty-label">
+                    <label>All transactions are confirmed</label>
+                </div>
             </React.Fragment>
         );
     }
@@ -36,8 +46,7 @@ export class UnconfirmedTxList extends React.Component {
     render() {
         const isEmpty = this.props.transactions.length === 0;
         let wrapperClassName = 'panel';
-        if (isEmpty)
-            wrapperClassName += ' panel-empty confirmed';
+        if (isEmpty) wrapperClassName += ' panel-empty confirmed';
 
         return (
             <div className={wrapperClassName}>
@@ -49,7 +58,7 @@ export class UnconfirmedTxList extends React.Component {
 
 export default class UnconfirmedTxListContainer extends React.Component {
     state = {
-        unconfirmed: []
+        unconfirmed: [],
     };
 
     componentWillUnmount() {
@@ -60,24 +69,11 @@ export default class UnconfirmedTxListContainer extends React.Component {
         return this.fetchData().then(this.setRefreshInterval);
     };
 
-    setAcryl = str =>  {
-        if(str.includes('WAVES') ) {
-            return str.replace('WAVES', 'ACRYL');
-        } else if (str.includes('Waves') ) {
-            return str.replace('Waves', 'Acryl');
-        } else {
-            return str;
-        }
-    }
-
     fetchData = () => {
-        return ServiceFactory.transactionService().loadUnconfirmed()
+        return ServiceFactory.transactionService()
+            .loadUnconfirmed()
             .then(unconfirmed => {
-                for (const unconfirmedTx of unconfirmed) {
-                    unconfirmedTx.fee.currency.shortName =  this.setAcryl(unconfirmedTx.fee.currency.shortName);
-                    unconfirmedTx.fee.currency.displayName = this.setAcryl(unconfirmedTx.fee.currency.displayName);
-                }
-                this.setState({unconfirmed})
+                this.setState({ unconfirmed });
             });
     };
 
@@ -94,7 +90,10 @@ export default class UnconfirmedTxListContainer extends React.Component {
 
     render() {
         return (
-            <Loader fetchData={this.initialFetch} errorTitle="Failed to load unconfirmed transactions">
+            <Loader
+                fetchData={this.initialFetch}
+                errorTitle="Failed to load unconfirmed transactions"
+            >
                 <UnconfirmedTxList transactions={this.state.unconfirmed} />
             </Loader>
         );

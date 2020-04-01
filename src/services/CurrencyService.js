@@ -1,10 +1,10 @@
 import Currency from '../shared/Currency';
-import {ApiClientService} from './ApiClientService';
+import { ApiClientService } from './ApiClientService';
 
 const FAILURE = new Currency({
     id: 'failure',
     displayName: 'Failed to load',
-    precision: 8
+    precision: 8,
 });
 
 export class CurrencyService extends ApiClientService {
@@ -25,7 +25,7 @@ export class CurrencyService extends ApiClientService {
 
     get = assetId => {
         if (!assetId) {
-            return Promise.resolve(Currency.WAVES);
+            return Promise.resolve(Currency.ACRYL);
         }
 
         const currency = this.currencyCache[assetId];
@@ -36,7 +36,8 @@ export class CurrencyService extends ApiClientService {
                 return this.promisesCashe[assetId];
             }
 
-            const promise = this.getApi().transactions.info(assetId)
+            const promise = this.getApi()
+                .transactions.info(assetId)
                 .then(infoResponse => {
                     const c = Currency.fromIssueTransaction(infoResponse.data);
                     return this.put(c);

@@ -10,10 +10,10 @@ import Loading from '../shared/Loading';
 export default class TransactionListFaucet extends React.Component {
     state = {
         hasMore: true,
-    }
+    };
 
     static propTypes = {
-        transactions: PropTypes.arrayOf(PropTypes.object).isRequired
+        transactions: PropTypes.arrayOf(PropTypes.object).isRequired,
     };
 
     componentWillMount() {
@@ -21,29 +21,20 @@ export default class TransactionListFaucet extends React.Component {
         this.setState({ hasMore: status });
     }
 
-    setAcryl(str) {
-        return str.replace('WAVES', 'ACRYL');
-    }
-
     loadMore() {
         const addressService = ServiceFactory.addressService();
         const address = this.props.address;
         let arrTransactions = this.props.transactions;
-        let after = arrTransactions[arrTransactions.length-1].id;
+        let after = arrTransactions[arrTransactions.length - 1].id;
 
-        addressService.loadTransactions(address, 100, after).then(transactions => {
-            return transactionMapper(transactions, address);
-        })
+        addressService
+            .loadTransactions(address, 100, after)
             .then(transactions => {
-                if (transactions.length < 100) { this.state.hasMore = false }
-                for (const transaction of transactions) {
-                    if(transaction.out) {
-                        transaction.out.currency = this.setAcryl(transaction.out.currency);
-                    }
-                    if(transaction.in) {
-                        transaction.in.currency = this.setAcryl(transaction.in.currency);
-                    }
-                    arrTransactions.push(transaction)
+                return transactionMapper(transactions, address);
+            })
+            .then(transactions => {
+                if (transactions.length < 100) {
+                    this.state.hasMore = false;
                 }
                 this.setState({ transactions: arrTransactions });
             });
@@ -55,7 +46,7 @@ export default class TransactionListFaucet extends React.Component {
                 initialLoad={false}
                 loadMore={this.loadMore.bind(this)}
                 hasMore={this.state.hasMore}
-                loader={<Loading key="tx-loader"/>}
+                loader={<Loading key="tx-loader" />}
             >
                 <table className="address-tr-list table-sm-transform">
                     <thead>
@@ -67,7 +58,12 @@ export default class TransactionListFaucet extends React.Component {
                     </thead>
                     <tbody>
                         {this.props.transactions.map((tx, index) => {
-                            return (<TransactionListItemFaucet key={index} tx={tx} />);
+                            return (
+                                <TransactionListItemFaucet
+                                    key={index}
+                                    tx={tx}
+                                />
+                            );
                         })}
                     </tbody>
                 </table>

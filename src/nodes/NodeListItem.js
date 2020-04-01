@@ -3,16 +3,19 @@ import PropTypes from 'prop-types';
 
 export default class NodeListItem extends React.Component {
     static propTypes = {
-        node: PropTypes.object.isRequired
+        node: PropTypes.object.isRequired,
     };
 
     render() {
-        const {node} = this.props;      
-        node.version = node.version.includes('Waves') ? node.version.replace('Waves', 'Acryl') : node.version;
+        const { node } = this.props;
         return (
             <tr>
                 <td data-label="Node">
-                    <div className="line no-wrap"><a href={node.url} target="_blank">{node.url}</a></div>
+                    <div className="line no-wrap">
+                        <a href={node.url} target="_blank">
+                            {node.url}
+                        </a>
+                    </div>
                 </td>
                 <td data-label="Version">
                     <div className="line">{node.version}</div>

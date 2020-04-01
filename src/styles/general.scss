@@ -1,5 +1,5 @@
-@import "variables";
-@import "mixins.scss";
+@import 'variables';
+@import 'mixins.scss';
 
 .info-box {
     justify-content: space-between;
@@ -8,10 +8,15 @@
 
     > * {
         @include responsive_styles(
-                map-deep-merge($card_inner, (sm: (
-                    padding-top: 14px,
-                    padding-bottom: 14px
-                )))
+            map-deep-merge(
+                $card_inner,
+                (
+                    sm: (
+                        padding-top: 14px,
+                        padding-bottom: 14px,
+                    ),
+                )
+            )
         );
     }
 }
@@ -28,7 +33,8 @@
         font-weight: bold;
     }
 
-    & + .wide, &:last-child {
+    & + .wide,
+    &:last-child {
         padding-bottom: 0;
     }
 
@@ -70,13 +76,13 @@
     }
 
     &.panel-empty {
-        >.panel-empty-icon {
+        > .panel-empty-icon {
             width: 88px;
             height: 88px;
             margin: 0 auto;
         }
 
-        >.panel-empty-label {
+        > .panel-empty-label {
             @include font(body, basic500);
             text-align: center;
         }
@@ -84,8 +90,9 @@
         &.confirmed {
             margin-top: 20vh;
 
-            >.panel-empty-icon {
-                background: url('../images/confirmed-88.svg') no-repeat center center;
+            > .panel-empty-icon {
+                background: url('../images/confirmed-88.svg') no-repeat center
+                    center;
             }
         }
 
@@ -96,16 +103,18 @@
             height: calc(100vh - 140px);
             box-sizing: border-box;
 
-            >.panel-empty-icon {
-                background: url('../images/erroring-88.svg') no-repeat center center;
+            > .panel-empty-icon {
+                background: url('../images/erroring-88.svg') no-repeat center
+                    center;
             }
         }
 
         &.no-data {
             @include responsive_styles($panel_empty);
 
-            >.panel-empty-icon {
-                background: url('../images/empty-88.svg') no-repeat center center;
+            > .panel-empty-icon {
+                background: url('../images/empty-88.svg') no-repeat center
+                    center;
             }
         }
     }
@@ -127,9 +136,12 @@
 
 .block-img-handler {
     @for $i from 1 through 3 {
-        &:nth-child(3n+#{$i}) {
+        &:nth-child(3n + #{$i}) {
             .block-img {
-                background: url('../images/waves-block-#{$i}.svg') no-repeat center center;
+                background: url('../images/acryl-block-#{$i}.svg')
+                    no-repeat
+                    center
+                    center;
                 width: 40px;
                 height: 40px;
                 float: left;
@@ -169,7 +181,7 @@
         text-overflow: ellipsis;
     }
 
-    .title-details + .btn{
+    .title-details + .btn {
         margin-left: 8px;
     }
 
@@ -243,7 +255,11 @@
             flex: 0 0 auto;
             background-color: map-get($colors, basic50);
 
-            @include responsive_styles($card_inner, padding-right, padding-left);
+            @include responsive_styles(
+                $card_inner,
+                padding-right,
+                padding-left
+            );
             @include responsive_styles($card_column);
             @include font(body, basic500);
         }
@@ -277,7 +293,8 @@
     }
 }
 
-th.price, th.amount {
+th.price,
+th.amount {
     width: 160px;
 }
 
@@ -317,7 +334,7 @@ th.price, th.amount {
     min-height: 45vh;
 
     &.empty {
-        .empty-icon-wrapper{
+        .empty-icon-wrapper {
             position: absolute;
             top: 50%;
             left: 50%;

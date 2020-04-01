@@ -1,4 +1,4 @@
-import {Decimal} from 'decimal.js';
+import { Decimal } from 'decimal.js';
 
 export default class Currency {
     constructor(data) {
@@ -16,24 +16,23 @@ export default class Currency {
         }
     }
 
-    static WAVES = new Currency({
+    static ACRYL = new Currency({
         id: '',
         displayName: 'Acryl',
         shortName: 'ACRYL',
-        precision: 8
+        precision: 8,
     });
 
     static fromIssueTransaction = issueTransaction => {
         return new Currency({
             id: issueTransaction.assetId,
             displayName: issueTransaction.name,
-            precision: issueTransaction.decimals
+            precision: issueTransaction.decimals,
         });
     };
 
     toString() {
-        if (this.shortName)
-            return this.shortName;
+        if (this.shortName) return this.shortName;
 
         return this.displayName;
     }
